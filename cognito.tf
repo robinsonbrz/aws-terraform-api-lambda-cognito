@@ -16,11 +16,11 @@ resource "aws_cognito_user_pool_client" "client" {
 
   user_pool_id  = aws_cognito_user_pool.pool.id
   callback_urls = ["https://example.com"]
-  # logout_urls   = ["https://sumeet.life"]
+  # logout_urls   = ["https://dominio.com"]
 }
 
 resource "aws_cognito_user" "example" {
   user_pool_id = aws_cognito_user_pool.pool.id
-  username     = "sumeet.n"
-  password     = "Test@123"
+  username     = "user_rob_cognito"
+  password     = "w3ak-p455w0Wd"
 }

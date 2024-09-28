@@ -5,16 +5,12 @@ resource "aws_lambda_function" "html_lambda" {
   handler          = "lambda_function.lambda_function"
   runtime          = "python3.9"
   source_code_hash = data.archive_file.lambda_package.output_base64sha256
-
   environment {
     variables = {
       QUEUE_URL = aws_sqs_queue.rob_sqs.url
     }
   }
-
-
 }
-
 resource "aws_iam_role" "lambda_role" {
   name = "lambda-role"
 
@@ -45,6 +41,27 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
   source_arn = "${aws_api_gateway_rest_api.my_api.execution_arn}/*/*/*"
 }
+
+# Define a new policy document that allows sending messages to the SQS queue
+data "aws_iam_policy_document" "lambda_sqs_policy" {
+  statement {
+    actions = ["sqs:SendMessage"]
+
+    resources = [
+      aws_sqs_queue.rob_sqs.arn
+    ]
+
+    effect = "Allow"
+  }
+}
+
+# Attach the policy to the Lambda role
+resource "aws_iam_role_policy" "lambda_sqs_policy" {
+  name   = "lambda-sqs-policy"
+  role   = aws_iam_role.lambda_role.id
+  policy = data.aws_iam_policy_document.lambda_sqs_policy.json
+}
+
 
 data "archive_file" "lambda_package" {
   type        = "zip"

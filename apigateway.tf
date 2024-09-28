@@ -143,20 +143,20 @@ resource "aws_api_gateway_deployment" "deployment" {
 
 # # // domain
 # resource "aws_acm_certificate" "my_api_cert" {
-#   domain_name               = "api.sumeet.life"
+#   domain_name               = "api.dominio.com"
 #   provider                  = aws.aws_useast1
-#   subject_alternative_names = ["api.sumeet.life"] # Your custom domain
+#   subject_alternative_names = ["api.dominio.com"] # Your custom domain
 #   validation_method         = "DNS"
 # }
 
 # resource "aws_api_gateway_domain_name" "gw_domain" {
 #   certificate_arn = aws_acm_certificate.my_api_cert.arn
-#   domain_name     = "api.sumeet.life"
+#   domain_name     = "api.dominio.com"
 #   security_policy = "TLS_1_2"
 # }
 
 # resource "aws_api_gateway_base_path_mapping" "gw_mapping" {
-#   domain_name = "api.sumeet.life"
+#   domain_name = "api.dominio.com"
 #   api_id      = aws_api_gateway_rest_api.my_api.id
 #   stage_name  = "dev" # Adjust as needed
 # }
